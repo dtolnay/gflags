@@ -1,0 +1,13 @@
+[package]
+name = "gflags"
+version = "0.0.0"
+authors = ["David Tolnay <dtolnay@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+gflags-impl = { version = "0.0", path = "impl" }
+inventory = "0.1"
+ref-cast = "0.2"
+
+[workspace]
+members = ["impl"]
