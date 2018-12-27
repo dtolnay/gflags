@@ -1,6 +1,6 @@
 [package]
 name = "gflags"
-version = "0.0.0"
+version = "0.1.0"
 authors = ["David Tolnay <dtolnay@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "Command line flags library that does not require a central list of all the flags."
@@ -10,7 +10,7 @@ readme = "README.md"
 edition = "2018"
 
 [dependencies]
-gflags-impl = { version = "0.0", path = "impl" }
+gflags-impl = { version = "0.1", path = "impl" }
 inventory = "0.1"
 ref-cast = "0.2"
 
