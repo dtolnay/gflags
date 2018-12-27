@@ -2,6 +2,9 @@
 name = "gflags-impl"
 version = "0.0.0"
 authors = ["David Tolnay <dtolnay@gmail.com>"]
+license = "MIT OR Apache-2.0"
+description = "Macros for gflags crate"
+repository = "https://github.com/dtolnay/gflags"
 edition = "2018"
 
 [lib]

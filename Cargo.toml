@@ -2,6 +2,11 @@
 name = "gflags"
 version = "0.0.0"
 authors = ["David Tolnay <dtolnay@gmail.com>"]
+license = "MIT OR Apache-2.0"
+description = "Command line flags library that does not require a central list of all the flags."
+repository = "https://github.com/dtolnay/gflags"
+documentation = "https://docs.rs/gflags"
+readme = "README.md"
 edition = "2018"
 
 [dependencies]
