@@ -241,7 +241,7 @@ pub use crate::state::Flag;
 pub mod registry;
 
 #[doc(hidden)]
-pub use inventory::submit;
+pub use inventory;
 
 #[doc(hidden)]
 pub use gflags_impl as r#impl;
