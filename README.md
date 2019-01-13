@@ -11,7 +11,7 @@ Flags)][gflags].
 
 ```toml
 [dependencies]
-gflags = "0.1"
+gflags = "0.2"
 ```
 
 *Supports rustc 1.31+*
@@ -60,7 +60,7 @@ There is no central list of all the flags of the application. (That's the point
 and advantage of gflags for large-scale development compared to other flags
 libraries.)
 
-[`gflags::define!`]: https://docs.rs/gflags/0.1/gflags/macro.define.html
+[`gflags::define!`]: https://docs.rs/gflags/0.2/gflags/macro.define.html
 
 ```rust
 gflags::define! {
@@ -88,7 +88,7 @@ command line. This call returns a `Vec<OsString>` containing everything on the
 command line which is not a flag (these are sometimes known as positional
 arguments) in a vector.
 
-[`gflags::parse()`]: https://docs.rs/gflags/0.1/gflags/fn.parse.html
+[`gflags::parse()`]: https://docs.rs/gflags/0.2/gflags/fn.parse.html
 
 After `gflags::parse()` has been called, the value of each flag is available in
 the `.FLAG` field of the flag's long name.
@@ -142,7 +142,7 @@ fn main() {
 There is no built-in `-h` flag for help, but you can define your own and call
 [`gflags::print_help_and_exit()`] to render the documentation of all flags.
 
-[`gflags::print_help_and_exit()`]: https://docs.rs/gflags/0.1/gflags/fn.print_help_and_exit.html
+[`gflags::print_help_and_exit()`]: https://docs.rs/gflags/0.2/gflags/fn.print_help_and_exit.html
 
 ```rust
 gflags::define! {
@@ -183,7 +183,7 @@ application name, version, author, introductory explanation, and usage strings.
 The `gflags::define!` macro is extensible to custom data types by providing an
 impl of [`gflags::custom::Value`] for your type.
 
-[`gflags::custom::Value`]: https://docs.rs/gflags/0.1/gflags/custom/trait.Value.html
+[`gflags::custom::Value`]: https://docs.rs/gflags/0.2/gflags/custom/trait.Value.html
 
 ```rust
 use gflags::custom::{Arg, Error, Result, Value};
