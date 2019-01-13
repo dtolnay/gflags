@@ -1,8 +1,8 @@
 use proc_macro2::TokenStream;
 use quote::ToTokens;
+use syn::ext::IdentExt;
 use syn::parse::{Parse, ParseStream, Result};
 use syn::{Ident, Token};
-use syn::ext::IdentExt;
 
 pub struct Placeholder {
     langle: Token![<],

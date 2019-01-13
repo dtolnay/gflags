@@ -1,8 +1,8 @@
 use proc_macro2::TokenStream;
 use quote::quote;
 
-use crate::{error, infer};
 use crate::parse::Flag;
+use crate::{error, infer};
 
 pub fn expand(input: Flag) -> TokenStream {
     let Flag {
