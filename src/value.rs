@@ -38,17 +38,13 @@ impl Value for bool {
 
 impl Value for &'static str {
     fn parse(arg: Arg) -> Result<Self> {
-        let string = arg.get_string();
-        let value = Box::leak(string.into_boxed_str());
-        Ok(value)
+        Ok(arg.get_str())
     }
 }
 
 impl Value for &'static OsStr {
     fn parse(arg: Arg) -> Result<Self> {
-        let string = arg.get_raw();
-        let value = Box::leak(string.into_boxed_os_str());
-        Ok(value)
+        Ok(arg.get_raw())
     }
 }
 
@@ -63,7 +59,7 @@ macro_rules! impl_value_for_primitive {
         $(
             impl Value for $primitive {
                 fn parse(arg: Arg) -> Result<Self> {
-                    arg.get_string().parse().map_err(Error)
+                    arg.get_str().parse().map_err(Error)
                 }
             }
         )*

@@ -200,7 +200,7 @@ enum Color {
 
 impl Value for Color {
     fn parse(arg: Arg) -> Result<Self> {
-        match arg.get_string().as_str() {
+        match arg.get_str() {
             "never" => Ok(Color::Never),
             "always" => Ok(Color::Always),
             "auto" => Ok(Color::Auto),

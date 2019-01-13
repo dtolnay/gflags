@@ -1,5 +1,5 @@
 use std::collections::BTreeMap;
-use std::ffi::OsString;
+use std::ffi::OsStr;
 use std::process;
 
 use crate::name::Name;
@@ -36,7 +36,7 @@ use crate::token::{Token, Tokenizer};
 ///     }
 /// }
 /// ```
-pub fn parse() -> Vec<OsString> {
+pub fn parse() -> Vec<&'static OsStr> {
     let mut shorts = BTreeMap::new();
     let mut longs = BTreeMap::new();
     for flag in inventory::iter::<Flag> {
@@ -61,7 +61,7 @@ pub fn parse() -> Vec<OsString> {
                     process::exit(1);
                 }
             },
-            Token::Long(name) => match longs.get(name.as_str()) {
+            Token::Long(name) => match longs.get(name) {
                 Some(flag) => {
                     let name = Name::long(flag.name);
                     flag.parser.parse(name, &mut tokens);

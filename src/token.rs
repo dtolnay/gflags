@@ -1,29 +1,28 @@
-use std::env::{self, ArgsOs};
-use std::ffi::OsString;
+use std::ffi::OsStr;
 
 pub struct Tokenizer {
-    args: ArgsOs,
-    pending: String,
+    args: argv::Iter,
+    pending: &'static str,
     pending_index: usize,
     rest_are_args: bool,
 }
 
 pub enum Token {
     Short(char),
-    Long(String),
-    Arg(OsString),
+    Long(&'static str),
+    Arg(&'static OsStr),
 }
 
 impl Tokenizer {
     pub(crate) fn new() -> Self {
-        let mut args = env::args_os();
+        let mut args = argv::iter();
 
         // Skip the executable.
         let _ = args.next();
 
         Tokenizer {
             args,
-            pending: String::new(),
+            pending: "",
             pending_index: 0,
             rest_are_args: false,
         }
@@ -41,9 +40,9 @@ impl Tokenizer {
             return Some(Token::Arg(arg));
         }
 
-        let mut string = match arg.into_string() {
-            Ok(string) => string,
-            Err(non_string) => return Some(Token::Arg(non_string)),
+        let string = match arg.to_str() {
+            Some(string) => string,
+            None => return Some(Token::Arg(arg)),
         };
 
         if string == "--" {
@@ -52,8 +51,7 @@ impl Tokenizer {
         }
 
         if string.starts_with("--") {
-            string.replace_range(..2, "");
-            return Some(Token::Long(string));
+            return Some(Token::Long(&string[2..]));
         }
 
         if string.starts_with("-") && string != "-" {
@@ -63,12 +61,14 @@ impl Tokenizer {
             return Some(Token::Short(ch));
         }
 
-        return Some(Token::Arg(OsString::from(string)));
+        return Some(Token::Arg(OsStr::new(string)));
     }
 
-    pub fn next_arg(&mut self) -> Option<OsString> {
+    pub fn next_arg(&mut self) -> Option<&'static OsStr> {
         if self.pending_index < self.pending.len() {
-            Some(OsString::from(self.pending.split_off(self.pending_index)))
+            let rest = &self.pending[self.pending_index..];
+            self.pending_index = self.pending.len();
+            Some(OsStr::new(rest))
         } else {
             self.args.next()
         }
