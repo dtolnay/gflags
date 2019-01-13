@@ -10,6 +10,7 @@ use crate::state::Flag;
 /// The gflags library provides implementations of `Value` for several primitive
 /// types like `&str` and `u64`. Refer to the [module documentation](index.html)
 /// for an example of implementing `Value` for your own types.
+#[allow(clippy::trivially_copy_pass_by_ref)]
 pub trait Value: Sized + 'static {
     fn parse(arg: Arg) -> Result<Self>;
 

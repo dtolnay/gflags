@@ -93,6 +93,7 @@ impl<T: 'static> Flag<T> {
 }
 
 impl Flag<bool> {
+    #[allow(clippy::trivially_copy_pass_by_ref)]
     pub(crate) fn set_bool(&self, value: &'static bool) {
         self.atomic.store(value);
         self.present.store(true, Ordering::SeqCst);

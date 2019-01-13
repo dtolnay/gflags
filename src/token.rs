@@ -54,14 +54,14 @@ impl Tokenizer {
             return Some(Token::Long(&string[2..]));
         }
 
-        if string.starts_with("-") && string != "-" {
+        if string.starts_with('-') && string != "-" {
             let ch = string[1..].chars().next().unwrap();
             self.pending = string;
             self.pending_index = 1 + ch.len_utf8();
             return Some(Token::Short(ch));
         }
 
-        return Some(Token::Arg(OsStr::new(string)));
+        Some(Token::Arg(OsStr::new(string)))
     }
 
     pub fn next_arg(&mut self) -> Option<&'static OsStr> {
