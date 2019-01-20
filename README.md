@@ -84,7 +84,7 @@ Flags of a type other than bool may have an optional value-placeholder like
 ## Accessing flags
 
 Somewhere early in your application, call [`gflags::parse()`] to parse the
-command line. This call returns a `Vec<OsString>` containing everything on the
+command line. This call returns a `Vec<&str>` containing everything on the
 command line which is not a flag (these are sometimes known as positional
 arguments) in a vector.
 

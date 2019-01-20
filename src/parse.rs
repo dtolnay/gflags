@@ -40,8 +40,30 @@ use crate::token::{Token, Tokenizer};
 /// # Aborts
 ///
 /// Aborts the process with an error message if the command line does not
-/// conform to the flags defined by the application.
-pub fn parse() -> Vec<&'static OsStr> {
+/// conform to the flags defined by the application, or if any of the positional
+/// arguments are non-UTF8. Use [`gflags::parse_os`] if you need to support
+/// non-UTF8 positional arguments.
+///
+/// [`gflags::parse_os`]: crate::parse_os()
+pub fn parse() -> Vec<&'static str> {
+    fn to_str_or_abort(os_str: &OsStr) -> &str {
+        os_str.to_str().unwrap_or_else(|| {
+            eprintln!("Unsupported non-UTF8 command line argument");
+            process::exit(1);
+        })
+    }
+
+    parse_os().into_iter().map(to_str_or_abort).collect()
+}
+
+/// Initialize the value of all flags, accepting non-UTF8 positional arguments.
+///
+/// Equivalent to [`gflags::parse`] in all ways except that non-UTF8 positional
+/// arguments are not an error. Note that non-UTF8 *flag values* are allowed
+/// even by `gflags::parse`.
+///
+/// [`gflags::parse`]: crate::parse()
+pub fn parse_os() -> Vec<&'static OsStr> {
     let mut shorts = BTreeMap::new();
     let mut longs = BTreeMap::new();
     for flag in inventory::iter::<Flag> {

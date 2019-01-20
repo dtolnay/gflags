@@ -80,9 +80,9 @@
 //! # Accessing flags
 //!
 //! Somewhere early in your application, call [`gflags::parse()`] to parse the
-//! command line. This call returns a `Vec<OsString>` containing everything on
-//! the command line which is not a flag (these are sometimes known as
-//! positional arguments) in a vector.
+//! command line. This call returns a `Vec<&str>` containing everything on the
+//! command line which is not a flag (these are sometimes known as positional
+//! arguments) in a vector.
 //!
 //! [`gflags::parse()`]: fn.parse.html
 //!
@@ -233,7 +233,7 @@ mod value;
 pub mod custom;
 
 pub use crate::help::print_help_and_exit;
-pub use crate::parse::parse;
+pub use crate::parse::{parse, parse_os};
 pub use crate::state::Flag;
 
 // Not public API.
