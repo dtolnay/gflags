@@ -36,6 +36,11 @@ use crate::token::{Token, Tokenizer};
 ///     }
 /// }
 /// ```
+///
+/// # Aborts
+///
+/// Aborts the process with an error message if the command line does not
+/// conform to the flags defined by the application.
 pub fn parse() -> Vec<&'static OsStr> {
     let mut shorts = BTreeMap::new();
     let mut longs = BTreeMap::new();
