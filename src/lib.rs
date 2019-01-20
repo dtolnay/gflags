@@ -87,7 +87,7 @@
 //! [`gflags::parse()`]: fn.parse.html
 //!
 //! After `gflags::parse()` has been called, the value of each flag is available
-//! in the `.FLAG` field of the flag's long name.
+//! in the `.flag` field of the flag's long name.
 //!
 //! ```
 //! gflags::define! {
@@ -97,7 +97,7 @@
 //! fn main() {
 //!     let args = gflags::parse();
 //!
-//!     if print_args.FLAG {
+//!     if PRINT_ARGS.flag {
 //!         println!("args = {:?}", args);
 //!     }
 //! }
@@ -110,7 +110,7 @@
 //! Additionally every flag provides a method `.is_present()` to query whether
 //! that flag was provided on the command line. When using flags for which a
 //! default value is not provided, be sure to check `.is_present()` because
-//! accessing `.FLAG` when not present will cause a panic. Note also that flags
+//! accessing `.flag` when not present will cause a panic. Note also that flags
 //! without a default value must specify their data type, as below.
 //!
 //! ```
@@ -124,8 +124,8 @@
 //! fn main() {
 //!     let patterns = gflags::parse();
 //!
-//!     if file.is_present() {
-//!         let path = file.FLAG;
+//!     if FILE.is_present() {
+//!         let path = FILE.flag;
 //!         println!("searching for patterns from file: {}", path.display());
 //!     } else {
 //!         println!("searching for patterns given on command line: {:?}", patterns);
@@ -148,7 +148,7 @@
 //!
 //! fn main() {
 //!     gflags::parse();
-//!     if help.FLAG {
+//!     if HELP.flag {
 //!         gflags::print_help_and_exit(0);
 //!     }
 //!

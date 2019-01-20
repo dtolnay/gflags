@@ -62,16 +62,16 @@ impl Value for Color {
 fn main() {
     let args = gflags::parse();
 
-    if help.FLAG {
+    if HELP.flag {
         print_help_and_exit();
     }
 
-    println!("big_menu = {}", big_menu.FLAG);
-    println!("language = {}", language.FLAG);
-    if file.is_present() {
-        println!("file = {}", file.FLAG.display());
+    println!("big_menu = {}", BIG_MENU.flag);
+    println!("language = {}", LANGUAGE.flag);
+    if FILE.is_present() {
+        println!("file = {}", FILE.flag.display());
     }
-    println!("color = {:?}", color.FLAG);
+    println!("color = {:?}", COLOR.flag);
     println!("args = {:?}", args);
 }
 
