@@ -12,7 +12,7 @@ use crate::atomic::StaticAtomicPtr;
 /// state of the flag can be accessed.
 ///
 /// After [`gflags::parse()`] has been called, the value of a flag is available
-/// through its `.FLAG` field which is of type `T`.
+/// through its `.flag` field which is of type `T`.
 ///
 /// [`gflags::define!`]: macro.define.html
 /// [`gflags::parse()`]: fn.parse.html
@@ -30,8 +30,8 @@ use crate::atomic::StaticAtomicPtr;
 /// fn main() {
 ///     let patterns = gflags::parse();
 ///
-///     if file.is_present() {
-///         let path = file.FLAG;
+///     if FILE.is_present() {
+///         let path = FILE.flag;
 ///         println!("searching for patterns from file: {}", path.display());
 ///     } else {
 ///         println!("searching for patterns given on command line: {:?}", patterns);
@@ -47,11 +47,11 @@ impl<T: 'static> Flag<T> {
     /// Whether this flag was provided on the command line.
     ///
     /// When using flags for which a default value is not provided, be sure to
-    /// check `.is_present()` because accessing `.FLAG` when not present will
+    /// check `.is_present()` because accessing `.flag` when not present will
     /// cause a panic.
     ///
     /// When a flag has a default value and is not passed on the command line,
-    /// `is_present()` will be false and `.FLAG` will refer to the default
+    /// `is_present()` will be false and `.flag` will refer to the default
     /// value.
     pub fn is_present(&self) -> bool {
         self.present.load(Ordering::SeqCst)
@@ -63,7 +63,7 @@ impl<T: 'static> Flag<T> {
 #[repr(transparent)]
 pub struct Accessor<T> {
     /// Value of the flag.
-    pub FLAG: T,
+    pub flag: T,
 }
 
 impl<T: 'static> Flag<T> {

@@ -32,7 +32,7 @@ impl Short {
 impl Long {
     pub fn to_ident(&self) -> Ident {
         let span = self.segments[0].span();
-        let symbol = self.to_string().replace('-', "_");
+        let symbol = self.to_string().replace('-', "_").to_uppercase();
         Ident::new(&symbol, span)
     }
 }

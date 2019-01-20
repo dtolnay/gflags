@@ -19,7 +19,7 @@ use crate::registry::Flag;
 ///
 /// fn main() {
 ///     gflags::parse();
-///     if help.FLAG {
+///     if HELP.flag {
 ///         gflags::print_help_and_exit(0);
 ///     }
 ///

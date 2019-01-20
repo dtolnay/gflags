@@ -11,7 +11,7 @@ use crate::token::{Token, Tokenizer};
 ///
 /// This function must be called before accessing the values of any flags. After
 /// this function has been called, the values of flags are available in the
-/// `.FLAG` field of each flag.
+/// `.flag` field of each flag.
 ///
 /// The return vector contains everything on the command line which is not a
 /// flag. These are sometimes called positional arguments.
@@ -31,7 +31,7 @@ use crate::token::{Token, Tokenizer};
 /// fn main() {
 ///     let args = gflags::parse();
 ///
-///     if print_args.FLAG {
+///     if PRINT_ARGS.flag {
 ///         println!("args = {:?}", args);
 ///     }
 /// }
