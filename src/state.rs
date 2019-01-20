@@ -58,7 +58,6 @@ impl<T: 'static> Flag<T> {
     }
 }
 
-#[allow(non_snake_case)]
 #[derive(RefCast)]
 #[repr(transparent)]
 pub struct Accessor<T> {
