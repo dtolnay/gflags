@@ -58,7 +58,7 @@ pub fn print_help_and_exit(code: i32) -> ! {
     process::exit(code);
 }
 
-fn try_print_help(stream: &mut Write) -> io::Result<()> {
+fn try_print_help(stream: &mut dyn Write) -> io::Result<()> {
     let mut flags = inventory::iter::<Flag>.into_iter().collect::<Vec<_>>();
     flags.sort_by_key(|flag| flag.name);
 
