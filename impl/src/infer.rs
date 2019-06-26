@@ -1,5 +1,4 @@
 use proc_macro2::TokenStream;
-use quote::quote;
 use syn::{parse_quote, IntSuffix, Lit, Type};
 
 pub fn infer_type(expr: &TokenStream) -> Option<Type> {
