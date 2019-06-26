@@ -210,7 +210,7 @@
 //! # fn main() {}
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/gflags/0.3.0")]
+#![doc(html_root_url = "https://docs.rs/gflags/0.3.1")]
 
 macro_rules! eprintln {
     ($($tt:tt)*) => {{
