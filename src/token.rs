@@ -54,7 +54,16 @@ impl Tokenizer {
         }
 
         if string.starts_with("--") {
-            return Some(Token::Long(&string[2..]));
+            return match string.find('=') {
+                // "--foo bar" case
+                None => Some(Token::Long(&string[2..])),
+                // "--foo-bar" case, save value in self.pending
+                Some(i) => {
+                    self.pending = &string[i + 1..];
+                    self.pending_index = 0;
+                    Some(Token::Long(&string[2..i]))
+                }
+            };
         }
 
         if string.starts_with('-') && string != "-" {
@@ -171,18 +180,12 @@ mod tests {
     }
 
     /// `--foo=bar` should work
-    ///
-    /// Note: Doesn't work yet.
     #[test]
-    #[should_panic(
-        expected = "assertion failed: `(left == right)`\n  left: `Long(\"foo=bar\")`,\n right: `Long(\"foo\")`"
-    )]
     fn one_long_flag_one_arg_equals() {
         let args = args_as_ref(&["binary", "--foo=bar"]);
         let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
         assert_eq!(tokenizer.next().unwrap(), Token::Long("foo"));
-        // Uncomment when using '=' works.
-        //assert_eq!(tokenizer.next_arg().unwrap(), "bar");
+        assert_eq!(tokenizer.next_arg().unwrap(), "bar");
     }
 
     /// "--" should cause everything afterwards to be treated as an argument
