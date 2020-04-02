@@ -106,22 +106,22 @@ pub fn parse_os() -> Vec<&'static OsStr> {
                     process::exit(1);
                 }
             },
-            Token::LongEq(name) => {
+            Token::LongEq(name, arg) => {
                 if let Some(flag) = longs.get(name) {
-                    if !flag.parser.is_bool() {
-                        let name = Name::long(flag.name);
-                        flag.parser.parse(name, &mut tokens);
-                        continue;
+                    if flag.parser.is_bool() {
+                        eprintln!("Unexpected argument {:?} for flag: --{}={}", arg, name, arg);
+                        process::exit(1);
                     }
+
+                    let name = Name::long(flag.name);
+
+                    // Prepare an iterator and tokenizer for just this arg, then
+                    // parse the arg for the flag
+                    let arg = vec![OsStr::new(arg)];
+                    let mut tokens = Tokenizer::new_with_iterator(arg.into_iter());
+
+                    flag.parser.parse(name, &mut tokens);
                 }
-
-                let arg = match tokens.next_arg() {
-                    Some(arg) => arg,
-                    None => OsStr::new(""),
-                };
-
-                eprintln!("Unexpected argument {:?} for flag: --{}", arg, name);
-                process::exit(1);
             }
             Token::Arg(arg) => args.push(arg),
         }
