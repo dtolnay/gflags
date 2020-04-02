@@ -57,7 +57,7 @@ impl Tokenizer {
             return match string.find('=') {
                 // "--foo bar" case
                 None => Some(Token::Long(&string[2..])),
-                // "--foo-bar" case, save value in self.pending
+                // "--foo=bar" case, save value in self.pending
                 Some(i) => {
                     self.pending = &string[i + 1..];
                     self.pending_index = 0;
