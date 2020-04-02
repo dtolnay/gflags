@@ -197,10 +197,9 @@ mod tests {
         assert_eq!(tokenizer.next().unwrap(), Token::Short('a'));
         assert_eq!(tokenizer.next().unwrap(), Token::Long("foo"));
         assert_eq!(tokenizer.next_arg().unwrap(), "bar");
-        assert_eq!(tokenizer.next_arg().unwrap(), "--");
         // After the '--' everything should be interpreted literally
-        assert_eq!(tokenizer.next_arg().unwrap(), "--baz");
-        assert_eq!(tokenizer.next_arg().unwrap(), "-b");
-        assert_eq!(tokenizer.next_arg().unwrap(), "hello");
+        assert_eq!(tokenizer.next().unwrap(), Token::Arg(OsStr::new("--baz")));
+        assert_eq!(tokenizer.next().unwrap(), Token::Arg(OsStr::new("-b")));
+        assert_eq!(tokenizer.next().unwrap(), Token::Arg(OsStr::new("hello")));
     }
 }
