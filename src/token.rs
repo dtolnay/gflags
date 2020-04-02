@@ -11,6 +11,7 @@ pub struct Tokenizer {
 pub enum Token {
     Short(char),
     Long(&'static str),
+    LongEq(&'static str),
     Arg(&'static OsStr),
 }
 
@@ -61,7 +62,7 @@ impl Tokenizer {
                 Some(i) => {
                     self.pending = &string[i + 1..];
                     self.pending_index = 0;
-                    Some(Token::Long(&string[2..i]))
+                    Some(Token::LongEq(&string[2..i]))
                 }
             };
         }
@@ -184,7 +185,7 @@ mod tests {
     fn one_long_flag_one_arg_equals() {
         let args = args_as_ref(&["binary", "--foo=bar"]);
         let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
-        assert_eq!(tokenizer.next().unwrap(), Token::Long("foo"));
+        assert_eq!(tokenizer.next().unwrap(), Token::LongEq("foo"));
         assert_eq!(tokenizer.next_arg().unwrap(), "bar");
     }
 
