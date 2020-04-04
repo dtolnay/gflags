@@ -121,6 +121,9 @@ pub fn parse_os() -> Vec<&'static OsStr> {
                     let mut tokens = Tokenizer::new_with_iterator(arg.into_iter());
 
                     flag.parser.parse(name, &mut tokens);
+                } else {
+                    eprintln!("Unrecognized flag: --{}", name);
+                    process::exit(1);
                 }
             }
             Token::Arg(arg) => args.push(arg),
