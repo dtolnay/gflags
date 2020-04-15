@@ -24,13 +24,13 @@ impl Tokenizer {
         // Skip the executable.
         let _ = args.next();
 
-        Self::new_with_iterator(args)
+        Tokenizer::iterate(args)
     }
 
     /// Creates a `Tokenizer` that iterates over the `args`, processing all items.
-    pub(crate) fn new_with_iterator<T: Iterator<Item = &'static OsStr> + 'static>(args: T) -> Self {
+    pub(crate) fn iterate(args: impl IntoIterator<Item = &'static OsStr> + 'static) -> Self {
         Tokenizer {
-            args: Box::new(args),
+            args: Box::new(args.into_iter()),
             pending: "",
             pending_index: 0,
             rest_are_args: false,
@@ -103,15 +103,15 @@ mod tests {
     /// created by calling `as_ref()` on a `str`, which gets tedious pretty
     /// quickly. So put them in a `[&str]` and pass it to this function to
     /// get back an iterator that converts each to a ref as needed.
-    fn args_as_ref<'a>(args: &'a [&str]) -> Box<dyn Iterator<Item = &'a OsStr> + 'a> {
-        Box::new(args.iter().map(|s| s.as_ref()))
+    fn args_as_ref<'a>(args: &'a [&str]) -> impl Iterator<Item = &'a OsStr> + 'a {
+        args.iter().copied().map(str::as_ref)
     }
 
     /// `-a` should work.
     #[test]
     fn one_short_flag_no_arg() {
         let args = args_as_ref(&["-a"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::Short('a'));
     }
 
@@ -119,7 +119,7 @@ mod tests {
     #[test]
     fn two_short_flags_no_args() {
         let args = args_as_ref(&["-a", "-b"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::Short('a'));
         assert_eq!(tokenizer.next().unwrap(), Token::Short('b'));
     }
@@ -128,7 +128,7 @@ mod tests {
     #[test]
     fn two_short_flags_no_args_cuddled() {
         let args = args_as_ref(&["-ab"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::Short('a'));
         assert_eq!(tokenizer.next().unwrap(), Token::Short('b'));
     }
@@ -137,7 +137,7 @@ mod tests {
     #[test]
     fn one_short_flag_one_arg() {
         let args = args_as_ref(&["-a", "b"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::Short('a'));
         assert_eq!(tokenizer.next_arg().unwrap(), "b");
     }
@@ -146,7 +146,7 @@ mod tests {
     #[test]
     fn one_short_flag_one_arg_cuddled() {
         let args = args_as_ref(&["-ab"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::Short('a'));
         assert_eq!(tokenizer.next_arg().unwrap(), "b");
     }
@@ -155,7 +155,7 @@ mod tests {
     #[test]
     fn one_short_flag_missing_arg() {
         let args = args_as_ref(&["-a"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::Short('a'));
         assert!(tokenizer.next_arg().is_none());
     }
@@ -164,7 +164,7 @@ mod tests {
     #[test]
     fn one_long_flag_no_args() {
         let args = args_as_ref(&["--foo"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::Long("foo"));
     }
 
@@ -172,7 +172,7 @@ mod tests {
     #[test]
     fn one_long_flag_one_arg_space() {
         let args = args_as_ref(&["--foo", "bar"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::Long("foo"));
         assert_eq!(tokenizer.next_arg().unwrap(), "bar");
     }
@@ -181,7 +181,7 @@ mod tests {
     #[test]
     fn one_long_flag_one_arg_equals() {
         let args = args_as_ref(&["--foo=bar"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::LongEq("foo", "bar"));
     }
 
@@ -190,7 +190,7 @@ mod tests {
     #[test]
     fn one_long_flag_missing_arg_equals() {
         let args = args_as_ref(&["--foo=", "bar"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::LongEq("foo", ""));
         assert_eq!(tokenizer.next().unwrap(), Token::Arg(OsStr::new("bar")));
     }
@@ -199,7 +199,7 @@ mod tests {
     #[test]
     fn double_dash_stops_flag_parsing() {
         let args = args_as_ref(&["-a", "--foo", "bar", "--", "--baz", "-b", "hello"]);
-        let mut tokenizer = Tokenizer::new_with_iterator(args.into_iter());
+        let mut tokenizer = Tokenizer::iterate(args);
         assert_eq!(tokenizer.next().unwrap(), Token::Short('a'));
         assert_eq!(tokenizer.next().unwrap(), Token::Long("foo"));
         assert_eq!(tokenizer.next_arg().unwrap(), "bar");

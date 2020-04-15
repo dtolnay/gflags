@@ -118,7 +118,7 @@ pub fn parse_os() -> Vec<&'static OsStr> {
                     // Prepare an iterator and tokenizer for just this arg, then
                     // parse the arg for the flag
                     let arg = vec![OsStr::new(arg)];
-                    let mut tokens = Tokenizer::new_with_iterator(arg.into_iter());
+                    let mut tokens = Tokenizer::iterate(arg);
 
                     flag.parser.parse(name, &mut tokens);
                 } else {
