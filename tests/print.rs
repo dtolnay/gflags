@@ -36,27 +36,27 @@ where
 
 #[test]
 fn unrecognized_short_flag() {
-    test_args_failure(&["-x"], "Unrecognized flag: -x");
+    test_args_failure(&["-x"], "Unrecognized flag: -x\n");
 }
 
 #[test]
 fn unrecognized_long_flag_no_arg() {
-    test_args_failure(&["--foo"], "Unrecognized flag: --foo");
+    test_args_failure(&["--foo"], "Unrecognized flag: --foo\n");
 }
 
 #[test]
 fn unrecognized_long_flag_with_arg() {
-    test_args_failure(&["--foo", "bar"], "Unrecognized flag: --foo");
+    test_args_failure(&["--foo", "bar"], "Unrecognized flag: --foo\n");
 }
 
 #[test]
 fn unrecognized_long_flag_equals_with_arg() {
-    test_args_failure(&["--foo=bar"], "Unrecognized flag: --foo");
+    test_args_failure(&["--foo=bar"], "Unrecognized flag: --foo\n");
 }
 
 #[test]
 fn unrecognized_long_flag_equals() {
-    test_args_failure(&["--foo="], "Unrecognized flag: --foo");
+    test_args_failure(&["--foo="], "Unrecognized flag: --foo\n");
 }
 
 // Success cases
@@ -83,10 +83,10 @@ fn long_language_flag_equals() {
 
 #[test]
 fn no_prefix_on_long_args() {
-    test_args_success(&["--nobig_menu"], "big_menu = false");
+    test_args_success(&["--nobig_menu"], "big_menu = false\n");
 }
 
 #[test]
 fn args_are_passed_through() {
-    test_args_success(&["foo"], "args = [\"foo\"]");
+    test_args_success(&["foo"], "args = [\"foo\"]\n");
 }
