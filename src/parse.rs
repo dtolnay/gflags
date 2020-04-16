@@ -109,7 +109,7 @@ pub fn parse_os() -> Vec<&'static OsStr> {
             Token::LongEq(name, arg) => {
                 if let Some(flag) = longs.get(name) {
                     if flag.parser.is_bool() {
-                        eprintln!("Unexpected argument {:?} for flag: --{}={}", arg, name, arg);
+                        eprintln!("Unexpected argument {:?} for flag: --{}={0}", arg, name);
                         process::exit(1);
                     }
 
