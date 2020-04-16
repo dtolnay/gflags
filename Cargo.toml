@@ -18,6 +18,10 @@ gflags-impl = { version = "=0.3.3", path = "impl" }
 inventory = "0.1.1"
 ref-cast = "1.0"
 
+[dev-dependencies]
+assert_cmd = "1"
+predicates = "1"
+
 [workspace]
 members = ["impl"]
 
