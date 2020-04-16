@@ -1,6 +1,6 @@
 use assert_cmd::Command;
 use predicates::prelude::*;
-use std::ffi;
+use std::ffi::OsStr;
 
 #[test]
 fn no_flags() {
@@ -10,10 +10,10 @@ fn no_flags() {
 
 /// Helper function to test errors when passing invalid arguments. Runs the
 /// binary, passing `args`, expecting a failure that contains `msg`.
-pub fn test_args_failure<I, S>(args: I, msg: &str)
+fn test_args_failure<I, S>(args: I, msg: &str)
 where
     I: IntoIterator<Item = S>,
-    S: AsRef<ffi::OsStr>,
+    S: AsRef<OsStr>,
 {
     let mut cmd = Command::cargo_bin("examples/print").unwrap();
     cmd.args(args);
@@ -22,10 +22,10 @@ where
 
 /// Helper function to test successes when passing valid arguments. Runs the
 /// binary, passing `args`, expecting success that contains `msg`.
-pub fn test_args_success<I, S>(args: I, msg: &str)
+fn test_args_success<I, S>(args: I, msg: &str)
 where
     I: IntoIterator<Item = S>,
-    S: AsRef<ffi::OsStr>,
+    S: AsRef<OsStr>,
 {
     let mut cmd = Command::cargo_bin("examples/print").unwrap();
     cmd.args(args);
