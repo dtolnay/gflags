@@ -28,9 +28,11 @@ impl Tokenizer {
     }
 
     /// Creates a `Tokenizer` that iterates over the `args`, processing all items.
-    pub(crate) fn iterate(
-        args: impl IntoIterator<Item = &'static (impl AsRef<OsStr> + ?Sized + 'static)> + 'static,
-    ) -> Self {
+    pub(crate) fn iterate<I, S>(args: I) -> Self
+    where
+        I: IntoIterator<Item = &'static S> + 'static,
+        S: AsRef<OsStr> + ?Sized + 'static,
+    {
         Tokenizer {
             args: Box::new(args.into_iter().map(AsRef::as_ref)),
             pending: "",
