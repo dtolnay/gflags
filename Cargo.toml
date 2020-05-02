@@ -9,9 +9,6 @@ documentation = "https://docs.rs/gflags"
 readme = "README.md"
 edition = "2018"
 
-[badges]
-travis-ci = { repository = "dtolnay/gflags" }
-
 [dependencies]
 argv = "0.1.1"
 gflags-impl = { version = "=0.3.4", path = "impl" }
