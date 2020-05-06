@@ -1,6 +1,6 @@
 # gflags
 
-[![Build Status](https://api.travis-ci.org/dtolnay/gflags.svg?branch=master)](https://travis-ci.org/dtolnay/gflags)
+[![Build Status](https://img.shields.io/github/workflow/status/dtolnay/gflags/CI/master)](https://github.com/dtolnay/gflags/actions?query=branch%3Amaster)
 [![Latest Version](https://img.shields.io/crates/v/gflags.svg)](https://crates.io/crates/gflags)
 [![Rust Documentation](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/gflags)
 
