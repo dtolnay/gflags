@@ -211,6 +211,7 @@
 //! ```
 
 #![doc(html_root_url = "https://docs.rs/gflags/0.3.4")]
+#![allow(clippy::needless_doctest_main)]
 
 macro_rules! eprintln {
     ($($tt:tt)*) => {{
