@@ -1,7 +1,8 @@
 use proc_macro2::TokenStream;
-use quote::quote;
+use quote::{quote, ToTokens};
 
 use crate::parse::Flag;
+use crate::placeholder::PlaceholderToken;
 use crate::{error, infer};
 
 pub fn expand(input: Flag) -> TokenStream {
@@ -44,7 +45,10 @@ pub fn expand(input: Flag) -> TokenStream {
             if quote!(#ty).to_string() == "bool" {
                 return error::bool_placeholder(placeholder);
             }
-            let placeholder_str = placeholder.ident.to_string();
+            let placeholder_str = match placeholder.text {
+                PlaceholderToken::Ident(ident) => ident.to_string().to_token_stream(),
+                PlaceholderToken::Lit(lit) => lit.to_token_stream(),
+            };
             quote!(Some(#placeholder_str))
         }
         None => quote!(None),
