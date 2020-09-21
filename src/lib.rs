@@ -218,7 +218,7 @@
 //! # fn main() {}
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/gflags/0.3.5")]
+#![doc(html_root_url = "https://docs.rs/gflags/0.3.6")]
 #![allow(clippy::needless_doctest_main)]
 
 macro_rules! eprintln {
