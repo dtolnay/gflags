@@ -1,10 +1,9 @@
-use std::collections::BTreeMap;
-use std::ffi::OsStr;
-use std::process;
-
 use crate::name::Name;
 use crate::registry::Flag;
 use crate::token::{Token, Tokenizer};
+use std::collections::BTreeMap;
+use std::ffi::OsStr;
+use std::process;
 
 /// Initialize the value of all flags based on arguments from the command line
 /// at runtime.

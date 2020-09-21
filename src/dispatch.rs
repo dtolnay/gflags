@@ -1,11 +1,10 @@
-use std::process;
-
 use crate::arg::Arg;
 use crate::error::Error;
 use crate::name::Name;
 use crate::state::Flag;
 use crate::token::Tokenizer;
 use crate::value::Value;
+use std::process;
 
 pub trait Parser {
     fn parse(&self, name: Name, command_line: &mut Tokenizer);

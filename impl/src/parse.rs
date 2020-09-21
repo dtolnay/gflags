@@ -1,10 +1,9 @@
+use crate::name::{Long, Name, Short};
+use crate::placeholder::Placeholder;
 use proc_macro2::TokenStream;
 use quote::quote;
 use syn::parse::{Error, Parse, ParseStream, Result};
 use syn::{bracketed, LitStr, Token, Type, Visibility};
-
-use crate::name::{Long, Name, Short};
-use crate::placeholder::Placeholder;
 
 pub struct Flag {
     pub doc: Vec<String>,

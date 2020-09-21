@@ -1,7 +1,6 @@
-use std::fmt::{self, Display};
-
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
+use std::fmt::{self, Display};
 use syn::ext::IdentExt;
 use syn::parse::{Error, Parse, ParseStream, Result};
 use syn::punctuated::{Pair, Punctuated};

@@ -1,9 +1,8 @@
+use crate::name::Long;
+use crate::placeholder::Placeholder;
 use proc_macro2::TokenStream;
 use quote::ToTokens;
 use syn::Error;
-
-use crate::name::Long;
-use crate::placeholder::Placeholder;
 
 pub fn cannot_infer(
     long: Long,

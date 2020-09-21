@@ -1,7 +1,6 @@
+use crate::name::Name;
 use std::ffi::OsStr;
 use std::process;
-
-use crate::name::Name;
 
 /// Raw argument value given for a non-boolean flag.
 pub struct Arg {

@@ -1,7 +1,6 @@
+use crate::registry::Flag;
 use std::io::{self, Write};
 use std::process;
-
-use crate::registry::Flag;
 
 /// Print the names and descriptions of all the flags.
 ///

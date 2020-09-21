@@ -1,5 +1,4 @@
 use gflags::custom::{Arg, Error, Result, Value};
-
 use std::path::Path;
 
 const ABOUT: &str = "

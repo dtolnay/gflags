@@ -1,9 +1,7 @@
+use crate::atomic::StaticAtomicPtr;
+use ref_cast::RefCast;
 use std::ops::Deref;
 use std::sync::atomic::{AtomicBool, Ordering};
-
-use ref_cast::RefCast;
-
-use crate::atomic::StaticAtomicPtr;
 
 /// The state associated with a single flag.
 ///

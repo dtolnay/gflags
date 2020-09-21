@@ -1,9 +1,8 @@
-use std::ffi::OsStr;
-use std::path::Path;
-
 use crate::custom::Arg;
 use crate::error::{Error, Result};
 use crate::state::Flag;
+use std::ffi::OsStr;
+use std::path::Path;
 
 /// Types that may be the data type of a flag.
 ///
