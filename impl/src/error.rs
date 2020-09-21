@@ -1,4 +1,5 @@
 use proc_macro2::TokenStream;
+use quote::ToTokens;
 use syn::Error;
 
 use crate::name::Long;
@@ -10,7 +11,7 @@ pub fn cannot_infer(
     default: Option<TokenStream>,
 ) -> TokenStream {
     let placeholder_elem = match &placeholder {
-        Some(placeholder) => format!(" <{}>", placeholder.ident),
+        Some(placeholder) => format!(" <{}>", placeholder.text.to_token_stream()),
         None => String::new(),
     };
     let default_elem = match default {
