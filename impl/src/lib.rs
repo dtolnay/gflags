@@ -1,3 +1,9 @@
+#![allow(
+    clippy::module_name_repetitions,
+    clippy::option_if_let_else,
+    clippy::single_match_else
+)]
+
 extern crate proc_macro;
 
 mod define;

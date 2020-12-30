@@ -219,7 +219,15 @@
 //! ```
 
 #![doc(html_root_url = "https://docs.rs/gflags/0.3.7")]
-#![allow(clippy::manual_strip, clippy::needless_doctest_main)]
+#![allow(
+    clippy::manual_strip,
+    clippy::missing_errors_doc,
+    clippy::module_name_repetitions,
+    clippy::must_use_candidate,
+    clippy::needless_doctest_main,
+    clippy::needless_pass_by_value,
+    clippy::single_match_else
+)]
 
 macro_rules! eprintln {
     ($($tt:tt)*) => {{
