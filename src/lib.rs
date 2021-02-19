@@ -220,6 +220,7 @@
 
 #![doc(html_root_url = "https://docs.rs/gflags/0.3.7")]
 #![allow(
+    clippy::let_underscore_drop,
     clippy::manual_strip,
     clippy::missing_errors_doc,
     clippy::module_name_repetitions,
