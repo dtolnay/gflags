@@ -39,7 +39,6 @@ use std::sync::atomic::{AtomicU8, Ordering};
 pub struct Flag<T> {
     atomic: StaticAtomicPtr<T>,
     present: AtomicU8,
-    //present: AtomicBool,
 }
 
 impl<T: 'static> Flag<T> {
@@ -83,7 +82,6 @@ impl<T: 'static> Flag<T> {
         Flag {
             atomic: StaticAtomicPtr::new(default),
             present: AtomicU8::new(0),
-            //present: AtomicBool::new(false),
         }
     }
 
@@ -93,7 +91,6 @@ impl<T: 'static> Flag<T> {
         Flag {
             atomic: StaticAtomicPtr::null(),
             present: AtomicU8::new(0),
-            //present: AtomicBool::new(false),
         }
     }
 
@@ -101,7 +98,6 @@ impl<T: 'static> Flag<T> {
         let ptr = Box::leak(Box::new(value));
         self.atomic.store(ptr);
         self.present.fetch_add(1, Ordering::SeqCst);
-        //self.present.store(true, Ordering::SeqCst);
     }
 }
 
@@ -110,7 +106,6 @@ impl Flag<bool> {
     pub(crate) fn set_bool(&self, value: &'static bool) {
         self.atomic.store(value);
         self.present.fetch_add(1, Ordering::SeqCst);
-        //self.present.store(true, Ordering::SeqCst);
     }
 }
 
