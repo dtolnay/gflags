@@ -1,7 +1,7 @@
 use crate::atomic::StaticAtomicPtr;
 use ref_cast::RefCast;
 use std::ops::Deref;
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::{AtomicU8, Ordering};
 
 /// The state associated with a single flag.
 ///
@@ -38,7 +38,8 @@ use std::sync::atomic::{AtomicBool, Ordering};
 /// ```
 pub struct Flag<T> {
     atomic: StaticAtomicPtr<T>,
-    present: AtomicBool,
+    present: AtomicU8,
+    //present: AtomicBool,
 }
 
 impl<T: 'static> Flag<T> {
@@ -52,6 +53,18 @@ impl<T: 'static> Flag<T> {
     /// `is_present()` will be false and `.flag` will refer to the default
     /// value.
     pub fn is_present(&self) -> bool {
+        self.present.load(Ordering::SeqCst) != 0
+    }
+
+    /// Count number of times an option is repeated on the command line.
+    ///
+    /// Useful to display verbosity or debug level by repeating a boolean flag
+    /// several times. For example, `-vv` for "very verbose" (repeat count 2)
+    /// or `-ddd` for debug level 3.
+    ///
+    /// The count wraps around to zero if an option is repeated on the
+    /// command line 256 times.
+    pub fn repeat_count(&self) -> u8 {
         self.present.load(Ordering::SeqCst)
     }
 }
@@ -69,7 +82,8 @@ impl<T: 'static> Flag<T> {
     pub const fn new(default: &'static T) -> Self {
         Flag {
             atomic: StaticAtomicPtr::new(default),
-            present: AtomicBool::new(false),
+            present: AtomicU8::new(0),
+            //present: AtomicBool::new(false),
         }
     }
 
@@ -78,14 +92,16 @@ impl<T: 'static> Flag<T> {
     pub const fn null() -> Self {
         Flag {
             atomic: StaticAtomicPtr::null(),
-            present: AtomicBool::new(false),
+            present: AtomicU8::new(0),
+            //present: AtomicBool::new(false),
         }
     }
 
     pub(crate) fn set(&self, value: T) {
         let ptr = Box::leak(Box::new(value));
         self.atomic.store(ptr);
-        self.present.store(true, Ordering::SeqCst);
+        self.present.fetch_add(1, Ordering::SeqCst);
+        //self.present.store(true, Ordering::SeqCst);
     }
 }
 
@@ -93,7 +109,8 @@ impl Flag<bool> {
     #[allow(clippy::trivially_copy_pass_by_ref)]
     pub(crate) fn set_bool(&self, value: &'static bool) {
         self.atomic.store(value);
-        self.present.store(true, Ordering::SeqCst);
+        self.present.fetch_add(1, Ordering::SeqCst);
+        //self.present.store(true, Ordering::SeqCst);
     }
 }
 

@@ -72,6 +72,27 @@ fn short_language_flag_cuddled() {
 }
 
 #[test]
+fn short_flag_repeat() {
+    test_args_success(&[""], 
+    "verbose = false\nis verbose? = false\nverbose count = 0\n");
+
+    test_args_success(&["-v", "-v"], 
+    "verbose = true\nis verbose? = true\nverbose count = 2\n");
+}
+
+#[test]
+fn short_flag_repeat_packed() {
+    test_args_success(&["-vv"], 
+    "verbose = true\nis verbose? = true\nverbose count = 2\n");
+}
+
+#[test]
+fn long_flag_repeat() {
+    test_args_success(&["--verbose", "--verbose"], 
+    "verbose = true\nis verbose? = true\nverbose count = 2\n");
+}
+
+#[test]
 fn long_language_flag() {
     test_args_success(&["--language", "french"], "language = french\n");
 }

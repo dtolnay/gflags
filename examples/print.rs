@@ -28,11 +28,17 @@ gflags::define! {
 }
 
 gflags::define! {
+    /// Be verbose. Increase verbosity level by repeating the flag; `-vv` for very verbose.
+    -v, --verbose = false
+}
+
+gflags::define! {
     /// Search for patterns from the given file, with one pattern per line.
     -f, --file: &Path
 }
 
 gflags::define! {
+    /// When to use color. Can be one of never, always, auto.
     --color <WHEN>: Color = Color::Auto
 }
 
@@ -71,6 +77,9 @@ fn main() {
         println!("file = {}", FILE.flag.display());
     }
     println!("color = {:?}", COLOR.flag);
+    println!("verbose = {}", VERBOSE.flag);
+    println!("is verbose? = {}", VERBOSE.is_present());
+    println!("verbose count = {}", VERBOSE.repeat_count());
     println!("args = {:?}", args);
 }
 
