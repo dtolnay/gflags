@@ -1,7 +1,7 @@
 use crate::atomic::StaticAtomicPtr;
 use ref_cast::RefCast;
 use std::ops::Deref;
-use std::sync::atomic::{AtomicU8, Ordering};
+use std::sync::atomic::{AtomicU32, Ordering};
 
 /// The state associated with a single flag.
 ///
@@ -38,7 +38,7 @@ use std::sync::atomic::{AtomicU8, Ordering};
 /// ```
 pub struct Flag<T> {
     atomic: StaticAtomicPtr<T>,
-    present: AtomicU8,
+    present: AtomicU32,
 }
 
 impl<T: 'static> Flag<T> {
@@ -60,10 +60,7 @@ impl<T: 'static> Flag<T> {
     /// Useful to display verbosity or debug level by repeating a boolean flag
     /// several times. For example, `-vv` for "very verbose" (repeat count 2)
     /// or `-ddd` for debug level 3.
-    ///
-    /// The count wraps around to zero if an option is repeated on the
-    /// command line 256 times.
-    pub fn repeat_count(&self) -> u8 {
+    pub fn repeat_count(&self) -> u32 {
         self.present.load(Ordering::SeqCst)
     }
 }
@@ -81,7 +78,7 @@ impl<T: 'static> Flag<T> {
     pub const fn new(default: &'static T) -> Self {
         Flag {
             atomic: StaticAtomicPtr::new(default),
-            present: AtomicU8::new(0),
+            present: AtomicU32::new(0),
         }
     }
 
@@ -90,7 +87,7 @@ impl<T: 'static> Flag<T> {
     pub const fn null() -> Self {
         Flag {
             atomic: StaticAtomicPtr::null(),
-            present: AtomicU8::new(0),
+            present: AtomicU32::new(0),
         }
     }
 
