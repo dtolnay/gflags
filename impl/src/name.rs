@@ -98,13 +98,8 @@ impl Display for Long {
     fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
         for pair in self.segments.pairs() {
             match pair {
-                Pair::Punctuated(ident, _hyphen) => {
-                    Display::fmt(ident, formatter)?;
-                    formatter.write_str("-")?;
-                }
-                Pair::End(ident) => {
-                    Display::fmt(ident, formatter)?;
-                }
+                Pair::Punctuated(ident, _hyphen) => write!(formatter, "{}-", ident)?,
+                Pair::End(ident) => write!(formatter, "{}", ident)?,
             }
         }
         Ok(())
