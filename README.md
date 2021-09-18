@@ -15,7 +15,7 @@ Flags)][gflags].
 gflags = "0.3"
 ```
 
-*Supports rustc 1.31+*
+*Supports rustc 1.33+*
 
 <br>
 
