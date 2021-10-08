@@ -17,8 +17,8 @@ inventory = "0.1.1"
 ref-cast = "1.0"
 
 [dev-dependencies]
-assert_cmd = "1"
-predicates = "1"
+assert_cmd = "2.0"
+predicates = "2.0"
 
 [workspace]
 members = ["impl"]
