@@ -8,7 +8,7 @@ repository = "https://github.com/dtolnay/gflags"
 documentation = "https://docs.rs/gflags"
 readme = "README.md"
 edition = "2018"
-rust-version = "1.33"
+rust-version = "1.37"
 
 [dependencies]
 argv = "0.1.3"

@@ -7,7 +7,7 @@ description = "Macros for gflags crate"
 repository = "https://github.com/dtolnay/gflags"
 documentation = "https://docs.rs/gflags"
 edition = "2018"
-rust-version = "1.33"
+rust-version = "1.37"
 
 [lib]
 proc-macro = true
