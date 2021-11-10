@@ -218,7 +218,7 @@
 //! # fn main() {}
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/gflags/0.3.8")]
+#![doc(html_root_url = "https://docs.rs/gflags/0.3.9")]
 #![allow(
     clippy::cast_possible_truncation,
     clippy::let_underscore_drop,
