@@ -6,7 +6,7 @@ use crate::token::Tokenizer;
 use crate::value::Value;
 use std::process;
 
-pub trait Parser {
+pub trait Parser: Sync {
     fn parse(&self, name: Name, command_line: &mut Tokenizer);
     fn is_bool(&self) -> bool;
     fn unset_bool(&self);
