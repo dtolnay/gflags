@@ -21,11 +21,11 @@ jobs:
       - run: cargo test
 
   msrv:
-    name: Rust 1.33.0
+    name: Rust 1.37.0
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: dtolnay/rust-toolchain@1.33.0
+      - uses: dtolnay/rust-toolchain@1.37.0
       - run: cargo check
 
   clippy:

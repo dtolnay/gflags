@@ -61,7 +61,6 @@ pub fn expand(input: Flag) -> TokenStream {
     quote! {
         #vis static #ident: gflags::Flag<#ty> = #init;
         gflags::inventory::submit! {
-            #![crate = gflags]
             gflags::registry::Flag {
                 doc: &[#(#doc),*],
                 short: #short,
