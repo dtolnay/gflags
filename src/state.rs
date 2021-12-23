@@ -93,7 +93,7 @@ impl<T: 'static> Flag<T> {
 
     pub(crate) fn set(&self, value: T) {
         let ptr = Box::leak(Box::new(value));
-        self.atomic.store(ptr);
+        self.atomic.store(ptr, Ordering::SeqCst);
         self.present.fetch_add(1, Ordering::SeqCst);
     }
 }
@@ -101,7 +101,7 @@ impl<T: 'static> Flag<T> {
 impl Flag<bool> {
     #[allow(clippy::trivially_copy_pass_by_ref)]
     pub(crate) fn set_bool(&self, value: &'static bool) {
-        self.atomic.store(value);
+        self.atomic.store(value, Ordering::SeqCst);
         self.present.fetch_add(1, Ordering::SeqCst);
     }
 }
@@ -110,6 +110,6 @@ impl<T: 'static> Deref for Flag<T> {
     type Target = Accessor<T>;
 
     fn deref(&self) -> &Self::Target {
-        Accessor::ref_cast(self.atomic.load())
+        Accessor::ref_cast(self.atomic.load(Ordering::SeqCst))
     }
 }

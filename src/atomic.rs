@@ -18,8 +18,8 @@ impl<T> StaticAtomicPtr<T> {
         }
     }
 
-    pub fn load(&self) -> &'static T {
-        let ptr = self.ptr.load(Ordering::SeqCst);
+    pub fn load(&self, ordering: Ordering) -> &'static T {
+        let ptr = self.ptr.load(ordering);
         let reference = unsafe { ptr.as_ref() };
         match reference {
             Some(t) => t,
@@ -27,8 +27,8 @@ impl<T> StaticAtomicPtr<T> {
         }
     }
 
-    pub fn store(&self, value: &'static T) {
+    pub fn store(&self, value: &'static T, ordering: Ordering) {
         let ptr = value as *const T as *mut T;
-        self.ptr.store(ptr, Ordering::SeqCst);
+        self.ptr.store(ptr, ordering);
     }
 }
