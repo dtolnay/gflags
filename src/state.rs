@@ -52,7 +52,7 @@ impl<T: 'static> Flag<T> {
     /// `is_present()` will be false and `.flag` will refer to the default
     /// value.
     pub fn is_present(&self) -> bool {
-        self.present.load(Ordering::SeqCst) != 0
+        self.present.load(Ordering::Acquire) != 0
     }
 
     /// Count number of times an option is repeated on the command line.
@@ -61,7 +61,7 @@ impl<T: 'static> Flag<T> {
     /// several times. For example, `-vv` for "very verbose" (repeat count 2)
     /// or `-ddd` for debug level 3.
     pub fn repeat_count(&self) -> u32 {
-        self.present.load(Ordering::SeqCst) as u32
+        self.present.load(Ordering::Acquire) as u32
     }
 }
 
@@ -93,16 +93,16 @@ impl<T: 'static> Flag<T> {
 
     pub(crate) fn set(&self, value: T) {
         let ptr = Box::leak(Box::new(value));
-        self.atomic.store(ptr, Ordering::SeqCst);
-        self.present.fetch_add(1, Ordering::SeqCst);
+        self.atomic.store(ptr, Ordering::Release);
+        self.present.fetch_add(1, Ordering::Release);
     }
 }
 
 impl Flag<bool> {
     #[allow(clippy::trivially_copy_pass_by_ref)]
     pub(crate) fn set_bool(&self, value: &'static bool) {
-        self.atomic.store(value, Ordering::SeqCst);
-        self.present.fetch_add(1, Ordering::SeqCst);
+        self.atomic.store(value, Ordering::Release);
+        self.present.fetch_add(1, Ordering::Release);
     }
 }
 
@@ -110,6 +110,6 @@ impl<T: 'static> Deref for Flag<T> {
     type Target = Accessor<T>;
 
     fn deref(&self) -> &Self::Target {
-        Accessor::ref_cast(self.atomic.load(Ordering::SeqCst))
+        Accessor::ref_cast(self.atomic.load(Ordering::Acquire))
     }
 }
