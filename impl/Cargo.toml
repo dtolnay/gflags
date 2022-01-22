@@ -1,6 +1,6 @@
 [package]
 name = "gflags-impl"
-version = "0.3.10"
+version = "0.3.11"
 authors = ["David Tolnay <dtolnay@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "Macros for gflags crate"
