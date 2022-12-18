@@ -12,7 +12,7 @@ rust-version = "1.37"
 [dependencies]
 argv = "0.1.3"
 gflags-impl = { version = "=0.3.11", path = "impl" }
-inventory = "0.2"
+inventory = "0.3"
 ref-cast = "1.0"
 
 [dev-dependencies]
