@@ -6,7 +6,6 @@ description = "Command line flags library that does not require a central list o
 documentation = "https://docs.rs/gflags"
 edition = "2018"
 license = "MIT OR Apache-2.0"
-readme = "README.md"
 repository = "https://github.com/dtolnay/gflags"
 rust-version = "1.37"
 
