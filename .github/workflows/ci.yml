@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rust: [nightly, beta, stable, 1.60.0]
+        rust: [nightly, beta, stable, 1.62.0]
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v3
@@ -26,15 +26,6 @@ jobs:
         with:
           toolchain: ${{matrix.rust}}
       - run: cargo test
-
-  msrv:
-    name: Rust 1.37.0
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dtolnay/rust-toolchain@1.37.0
-      - run: cargo check
 
   clippy:
     name: Clippy
