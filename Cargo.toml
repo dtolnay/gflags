@@ -1,6 +1,6 @@
 [package]
 name = "gflags"
-version = "0.3.11" # remember to update html_root_url
+version = "0.3.12" # remember to update html_root_url
 authors = ["David Tolnay <dtolnay@gmail.com>"]
 description = "Command line flags library that does not require a central list of all the flags."
 documentation = "https://docs.rs/gflags"
@@ -11,7 +11,7 @@ rust-version = "1.37"
 
 [dependencies]
 argv = "0.1.3"
-gflags-impl = { version = "=0.3.11", path = "impl" }
+gflags-impl = { version = "=0.3.12", path = "impl" }
 inventory = "0.3"
 ref-cast = "1.0"
 
